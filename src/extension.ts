@@ -19,6 +19,9 @@ export function activate(context: vscode.ExtensionContext) {
         const cliCommand = `mason make ait_new_package --name ${name} -o ${relativePath}`;
         try {
           const result = child_process.execSync(cliCommand, { cwd: cwd });
+          child_process.execSync("melos bootstrap", {
+            cwd: cwd,
+          });
           vscode.window.showInformationMessage(
             `CLI command executed successfully: ${result}`,
           );
