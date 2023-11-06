@@ -32,16 +32,23 @@ export function registerNewPageCommand(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage("No name provided. Aborting.");
       } else {
         const cliCommand = `mason make ait_new_page --name ${name} --use_formx ${use_formx} -o ${relativePath}`;
-        try {
-          const result = child_process.execSync(cliCommand, { cwd: cwd });
-          vscode.window.showInformationMessage(
-            `CLI command executed successfully: ${result}`,
-          );
-        } catch (error) {
-          vscode.window.showErrorMessage(
-            `Error running CLI command: ${error.message}`,
-          );
-        }
+        vscode.window.withProgress(
+          {
+            location: vscode.ProgressLocation.Notification,
+            title: "Creating new page...",
+            cancellable: false,
+          },
+          async (progress) => {
+            try {
+              const result = child_process.execSync(cliCommand, { cwd: cwd });
+              vscode.window.showInformationMessage("Creating new page success");
+            } catch (error) {
+              vscode.window.showErrorMessage(
+                `Error running CLI command: ${error.message}`,
+              );
+            }
+          },
+        );
       }
     },
   );

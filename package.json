@@ -29,11 +29,13 @@
       "explorer/context": [
         {
           "command": "ait-mason.new-package",
-          "group": "1_files"
+          "group": "1_files",
+          "when": "explorerResourceIsFolder"
         },
         {
           "command": "ait-mason.new-page",
-          "group": "1_files"
+          "group": "1_files",
+          "when": "explorerResourceIsFolder"
         }
       ]
     }
