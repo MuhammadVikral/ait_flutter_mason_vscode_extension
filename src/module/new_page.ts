@@ -17,7 +17,7 @@ export function registerNewPageCommand(context: vscode.ExtensionContext) {
         value: "false",
         validateInput: (input) => {
           if (input !== "false" && input !== "true") {
-            return "Please enter 'Y' or 'N'";
+            return "Please enter 'true' or 'false'";
           }
           return null;
         },
