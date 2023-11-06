@@ -9,19 +9,30 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:ait-mason.new-package",
+    "onCommand:ait-mason.new-page"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "ait-mason.new-package",
         "title": "create new package"
+      },
+      {
+        "command": "ait-mason.new-page",
+        "title": "create new page"
       }
     ],
     "menus": {
       "explorer/context": [
         {
           "command": "ait-mason.new-package",
+          "group": "1_files"
+        },
+        {
+          "command": "ait-mason.new-page",
           "group": "1_files"
         }
       ]
