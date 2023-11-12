@@ -7,7 +7,16 @@ export function registerNewPackageCommand(context: vscode.ExtensionContext) {
     "ait-mason.new-package",
     async (resource) => {
       const workspaceFolder = vscode.workspace.getWorkspaceFolder(resource);
-      const cwd = workspaceFolder.uri.fsPath;
+      var cwd: string = "";
+      if (workspaceFolder) {
+        cwd = workspaceFolder.uri.fsPath;
+        // Your code for working with the workspace folder
+      } else {
+        // Handle the case where no workspace folder is found
+        vscode.window.showErrorMessage(
+          "No workspace folder found. Please open a workspace.",
+        );
+      }
       const relativePath = path.relative(cwd, resource.fsPath);
       const name = await vscode.window.showInputBox({
         prompt: "Enter a name for the package",
@@ -31,7 +40,7 @@ export function registerNewPackageCommand(context: vscode.ExtensionContext) {
               );
             } catch (error) {
               vscode.window.showErrorMessage(
-                `Error running CLI command: ${error.message}`,
+                `Error running CLI command: ${error}`,
               );
             }
           },

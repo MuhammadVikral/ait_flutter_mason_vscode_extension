@@ -7,7 +7,16 @@ export function registerNewPageCommand(context: vscode.ExtensionContext) {
     "ait-mason.new-page",
     async (resource) => {
       const workspaceFolder = vscode.workspace.getWorkspaceFolder(resource);
-      const cwd = workspaceFolder.uri.fsPath;
+      var cwd: string = "";
+      if (workspaceFolder) {
+        cwd = workspaceFolder.uri.fsPath;
+        // Your code for working with the workspace folder
+      } else {
+        // Handle the case where no workspace folder is found
+        vscode.window.showErrorMessage(
+          "No workspace folder found. Please open a workspace.",
+        );
+      }
       const relativePath = path.relative(cwd, resource.fsPath);
       const name = await vscode.window.showInputBox({
         prompt: "Enter a name for the package",
@@ -44,7 +53,7 @@ export function registerNewPageCommand(context: vscode.ExtensionContext) {
               vscode.window.showInformationMessage("Creating new page success");
             } catch (error) {
               vscode.window.showErrorMessage(
-                `Error running CLI command: ${error.message}`,
+                `Error running CLI command: ${error}`,
               );
             }
           },
@@ -53,3 +62,20 @@ export function registerNewPageCommand(context: vscode.ExtensionContext) {
     },
   );
 }
+// vscode.window.withProgress(
+//   {
+//     location: vscode.ProgressLocation.Notification,
+//     title: "Creating new page...",
+//     cancellable: false,
+//   },
+//   async (progress) => {
+//     try {
+//       const result = child_process.execSync(cliCommand, { cwd: cwd });
+//       vscode.window.showInformationMessage("Creating new entity success");
+//     } catch (error) {
+//       vscode.window.showErrorMessage(
+//         `Error running CLI command: ${error}`,
+//       );
+//     }
+//   },
+// );

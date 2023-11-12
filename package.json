@@ -2,7 +2,8 @@
   "name": "ait-mason",
   "displayName": "ait_mason",
   "description": "ait flutter boilerplate with the help of mason cli",
-  "version": "0.0.1",
+  "repository": "https://github.com/MuhammadVikral/ait_flutter_mason_vscode_extension.git",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.83.0"
   },
@@ -11,7 +12,8 @@
   ],
   "activationEvents": [
     "onCommand:ait-mason.new-package",
-    "onCommand:ait-mason.new-page"
+    "onCommand:ait-mason.new-page",
+    "onCommand:ait-mason.new-entity"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -19,6 +21,10 @@
       {
         "command": "ait-mason.new-package",
         "title": "create new package"
+      },
+      {
+        "command": "ait-mason.new-entity",
+        "title": "create new Entity"
       },
       {
         "command": "ait-mason.new-page",
@@ -34,6 +40,11 @@
         },
         {
           "command": "ait-mason.new-page",
+          "group": "1_files",
+          "when": "explorerResourceIsFolder"
+        },
+        {
+          "command": "ait-mason.new-entity",
           "group": "1_files",
           "when": "explorerResourceIsFolder"
         }
