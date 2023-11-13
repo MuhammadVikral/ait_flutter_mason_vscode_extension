@@ -20,15 +20,15 @@
     "commands": [
       {
         "command": "ait-mason.new-package",
-        "title": "create new package"
+        "title": "AIT create new package"
       },
       {
         "command": "ait-mason.new-entity",
-        "title": "create new Entity"
+        "title": "AIT create new Entity"
       },
       {
         "command": "ait-mason.new-page",
-        "title": "create new page"
+        "title": "AIT create new page"
       }
     ],
     "menus": {

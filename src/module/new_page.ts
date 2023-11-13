@@ -62,20 +62,3 @@ export function registerNewPageCommand(context: vscode.ExtensionContext) {
     },
   );
 }
-// vscode.window.withProgress(
-//   {
-//     location: vscode.ProgressLocation.Notification,
-//     title: "Creating new page...",
-//     cancellable: false,
-//   },
-//   async (progress) => {
-//     try {
-//       const result = child_process.execSync(cliCommand, { cwd: cwd });
-//       vscode.window.showInformationMessage("Creating new entity success");
-//     } catch (error) {
-//       vscode.window.showErrorMessage(
-//         `Error running CLI command: ${error}`,
-//       );
-//     }
-//   },
-// );

@@ -21,18 +21,21 @@ export function registerNewEntityCommand(context: vscode.ExtensionContext) {
 
       const relativePath = path.relative(cwd, resource.fsPath);
 
+      const name = await vscode.window.showInputBox({
+        prompt: "Enter a name for the entity",
+      });
       const jsonInput = await vscode.window.showInputBox({
         prompt: "Enter JSON data:",
         placeHolder: '{"key": "value", "number": 42, "array": [1, 2, 3]}',
         value: "",
       });
-      if (jsonInput) {
+      if (name !== "" && name !== undefined && jsonInput) {
         try {
           const jsonData = JSON.parse(jsonInput);
           const jsonString = JSON.stringify(jsonData, null, 2);
           vscode.window.showInformationMessage(` ${jsonString}`);
           const tempFilePath = createTempJsonFile(jsonString);
-          const cliCommand = `mason make ait_entity --name 'users' -c ${tempFilePath} -o ${relativePath}`;
+          const cliCommand = `mason make ait_entity --name ${name} -c ${tempFilePath} -o ${relativePath}`;
           vscode.window.withProgress(
             {
               location: vscode.ProgressLocation.Notification,
@@ -54,6 +57,7 @@ export function registerNewEntityCommand(context: vscode.ExtensionContext) {
               }
             },
           );
+          deleteTempJsonFile(tempFilePath);
         } catch (error) {
           vscode.window.showErrorMessage(
             `Invalid JSON input. Please enter valid JSON. ${error}`,
@@ -71,4 +75,11 @@ function createTempJsonFile(jsonString: string): string {
   fs.writeFileSync(tempFilePath, jsonString, "utf-8");
 
   return tempFilePath;
+}
+function deleteTempJsonFile(tempFilePath: string): void {
+  // Check if the file exists before attempting to delete
+  if (fs.existsSync(tempFilePath)) {
+    fs.unlinkSync(tempFilePath);
+    console.log(`Temporary JSON file deleted: ${tempFilePath}`);
+  }
 }
