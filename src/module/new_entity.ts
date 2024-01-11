@@ -35,7 +35,17 @@ export function registerNewEntityCommand(context: vscode.ExtensionContext) {
           const jsonString = JSON.stringify(jsonData, null, 2);
           vscode.window.showInformationMessage(` ${jsonString}`);
           const tempFilePath = createTempJsonFile(jsonString);
-          const cliCommand = `mason make ait_entity --name ${name} -c ${tempFilePath} -o ${relativePath}`;
+          const isParam = await vscode.window.showInputBox({
+            prompt: "does your model used as a request",
+            value: "false",
+            validateInput: (input) => {
+              if (input !== "false" && input !== "true") {
+                return "Please enter 'true' or 'false'";
+              }
+              return null;
+            },
+          });
+          const cliCommand = `mason make ait_entity --name ${name} --is_param ${isParam} -c ${tempFilePath} -o ${relativePath}`;
           vscode.window.withProgress(
             {
               location: vscode.ProgressLocation.Notification,
@@ -48,7 +58,7 @@ export function registerNewEntityCommand(context: vscode.ExtensionContext) {
                   cwd: cwd,
                 });
                 vscode.window.showInformationMessage(
-                  "Creating new page success",
+                  "Creating new entity success",
                 );
               } catch (error) {
                 vscode.window.showErrorMessage(

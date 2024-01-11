@@ -19,7 +19,7 @@ export function registerNewPageCommand(context: vscode.ExtensionContext) {
       }
       const relativePath = path.relative(cwd, resource.fsPath);
       const name = await vscode.window.showInputBox({
-        prompt: "Enter a name for the package",
+        prompt: "Enter a name for the page",
       });
       const use_formx = await vscode.window.showInputBox({
         prompt: "use formx for the cubit? (true or false)",
